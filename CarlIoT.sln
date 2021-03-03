@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.960
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarlIoT.BandAgent", "CarlIoT.BandAgent\CarlIoT.BandAgent.csproj", "{E8B0DC2D-5350-4A87-9D8F-6D2806E127D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarlIoT.MessageProcessor", "CarlIoT.MessageProcessor\CarlIoT.MessageProcessor.csproj", "{32D47D9A-F579-433C-AF43-95F9F75F3FA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarlIoT.Common", "CarlIoT.Common\CarlIoT.Common.csproj", "{20DE9734-3B12-43C6-AFF5-0EA119500473}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarlIoT.BandManager", "CarlIoT.BandManager\CarlIoT.BandManager.csproj", "{1A32A9F6-7ADE-4815-B731-0BC7EFF66605}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8B0DC2D-5350-4A87-9D8F-6D2806E127D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B0DC2D-5350-4A87-9D8F-6D2806E127D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B0DC2D-5350-4A87-9D8F-6D2806E127D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B0DC2D-5350-4A87-9D8F-6D2806E127D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32D47D9A-F579-433C-AF43-95F9F75F3FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32D47D9A-F579-433C-AF43-95F9F75F3FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32D47D9A-F579-433C-AF43-95F9F75F3FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32D47D9A-F579-433C-AF43-95F9F75F3FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20DE9734-3B12-43C6-AFF5-0EA119500473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20DE9734-3B12-43C6-AFF5-0EA119500473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20DE9734-3B12-43C6-AFF5-0EA119500473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20DE9734-3B12-43C6-AFF5-0EA119500473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A32A9F6-7ADE-4815-B731-0BC7EFF66605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A32A9F6-7ADE-4815-B731-0BC7EFF66605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A32A9F6-7ADE-4815-B731-0BC7EFF66605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A32A9F6-7ADE-4815-B731-0BC7EFF66605}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5841D2A5-F716-456C-A6FB-31A90CFB7D73}
+	EndGlobalSection
+EndGlobal
