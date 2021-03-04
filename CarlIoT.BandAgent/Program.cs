@@ -16,7 +16,7 @@ namespace CarlIoT.BandAgent
         private static TwinCollection _reportedProperties;
 
         private const string DeviceConnectionString =
-            "HostName=lrac-demo-hub.azure-devices.net;DeviceId=device-01;SharedAccessKey=ZReyMAw3ytJfEhKFWaUqvzBqM1FXZ/NiNnNO5ctWglo=";
+            "HostName=lrac-demo-hub.azure-devices.net;DeviceId=device-01;SharedAccessKey=ZReyMAw3ytJfEhKFWaUqvzBqM1FXZ/NiNnNO5ctWglo="; // TODO: store key in input file
         
         static async Task Main(string[] args)
         {
@@ -26,10 +26,9 @@ namespace CarlIoT.BandAgent
                 .Seq("http://localhost:5341/")
                 .CreateLogger();
 
-            Log.Information("Starting up");
-
             CancellationTokenSource cts = new CancellationTokenSource();
-            Console.WriteLine("Init Band Agent...");
+
+            Log.Information("Starting up Band Agent");
 
             _device = DeviceClient.CreateFromConnectionString(DeviceConnectionString);
 
@@ -51,9 +50,7 @@ namespace CarlIoT.BandAgent
             Console.WriteLine("u: sends a unhappy feedback");
             Console.WriteLine("e: requests emergency help");
 
-            var consoleKeyTask = Task.Run(() => { CheckKeypress(_device, cts.Token); }, cts.Token);
-
-            await consoleKeyTask;
+            await CheckKeypress(_device, cts.Token);
         }
 
         public static async Task CheckKeypress(DeviceClient deviceClient, CancellationToken cancellationToken)
