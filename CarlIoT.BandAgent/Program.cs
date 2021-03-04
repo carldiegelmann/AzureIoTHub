@@ -6,6 +6,7 @@ using CarlIoT.Common;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace CarlIoT.BandAgent
 {
@@ -19,6 +20,14 @@ namespace CarlIoT.BandAgent
         
         static async Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext().WriteTo
+                .Console().WriteTo
+                .Seq("http://localhost:5341/")
+                .CreateLogger();
+
+            Log.Information("Starting up");
+
             CancellationTokenSource cts = new CancellationTokenSource();
             Console.WriteLine("Init Band Agent...");
 
