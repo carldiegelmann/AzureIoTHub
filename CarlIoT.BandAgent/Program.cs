@@ -5,19 +5,22 @@ using System.Threading.Tasks;
 using CarlIoT.Common;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
+using Microsoft.WindowsAzure.Storage;
 using Newtonsoft.Json;
 using Serilog;
 
 namespace CarlIoT.BandAgent
 {
-    class Program
+    public class Program
     {
         private static DeviceClient _device;
         private static TwinCollection _reportedProperties;
 
+        private const string deviceId = "device-01";
+
         private const string DeviceConnectionString =
             "HostName=lrac-demo-hub.azure-devices.net;DeviceId=device-01;SharedAccessKey=ZReyMAw3ytJfEhKFWaUqvzBqM1FXZ/NiNnNO5ctWglo="; // TODO: store key in input file
-        
+
         static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -34,12 +37,13 @@ namespace CarlIoT.BandAgent
 
             await _device.OpenAsync(cts.Token); // connect to azure hub
 
-            //var foo = Task.Run(() => ReceiveEvents(device));
             var receiveEvents = ReceiveEvents(_device);
 
             await _device.SetMethodHandlerAsync("showMessage", ShowMessage, null, cts.Token);
 
             Console.WriteLine("Device is connected!");
+
+            Log.Information($"Device with Id: '{deviceId}' is connected!");
 
             await UpdateTwin(_device);
             await _device.SetDesiredPropertyUpdateCallbackAsync(UpdateProperties, null);
@@ -60,46 +64,49 @@ namespace CarlIoT.BandAgent
             do
             {
                 cki = Console.ReadKey();
-                    Console.Write("Action? ");
-                    //var input = Console.ReadKey().KeyChar;
-                    Console.WriteLine();
+                Console.Write("Action? ");
 
-                    var status = StatusType.NotSpecified;
-                    var latitude = random.Next(0, 100);
-                    var longitude = random.Next(0, 100);
+                Console.WriteLine();
 
-                    switch (Char.ToLower(cki.KeyChar))
-                    {
-                        case 'h':
-                            status = StatusType.Happy;
-                            break;
-                        case 'u':
-                            status = StatusType.Unhappy;
-                            break;
-                        case 'e':
-                            status = StatusType.Emergency;
-                            break;
-                        default:
-                            break;
-                    }
+                var status = StatusType.NotSpecified;
+                var latitude = random.Next(0, 100);
+                var longitude = random.Next(0, 100);
 
-                    var telemetry = new Telemetry
-                    {
-                        Status = status,
-                        Latitude = latitude,
-                        Longitude = longitude
-                    };
+                switch (Char.ToLower(cki.KeyChar))
+                {
+                    case 'h':
+                        status = StatusType.Happy;
+                        break;
+                    case 'u':
+                        status = StatusType.Unhappy;
+                        break;
+                    case 'e':
+                        status = StatusType.Emergency;
+                        break;
+                    default:
+                        break;
+                }
 
-                    var payload = JsonConvert.SerializeObject(telemetry);
+                var telemetry = new Telemetry
+                {
+                    Status = status,
+                    Latitude = latitude,
+                    Longitude = longitude
+                };
 
-                    var message = new Message(Encoding.ASCII.GetBytes(payload));
+                var message = new Message(Encoding.ASCII.GetBytes(SerializeToJson(telemetry)));
 
-                    await deviceClient.SendEventAsync(message, cancellationToken);
+                await deviceClient.SendEventAsync(message, cancellationToken);
 
-                    Console.WriteLine("Message was sent successfully!! :)");
+                Console.WriteLine("Message was sent successfully!! :)");
 
-                    // Wait for an ESC
+                // Wait for an ESC
             } while (cki.Key != ConsoleKey.Escape);
+        }
+
+        internal static string SerializeToJson(Telemetry telemetry)
+        { 
+            return JsonConvert.SerializeObject(telemetry);
         }
 
         private static Task<MethodResponse> ShowMessage(

@@ -9,9 +9,11 @@ namespace CarlIoT.BandManager
 {
     class Program
     {
+        static readonly string LatestDeviceFirmwareVersion = "2.1";
         static async Task Main(string[] args) {
 
             var serviceConnectionString = "HostName=lrac-demo-hub.azure-devices.net;SharedAccessKeyName=service;SharedAccessKey=BkNHrdM+H5c8v5BRm0uWxnFH32dk+yO1syccKHXtT2w=";
+            
 
             var serviceClient = ServiceClient.CreateFromConnectionString(serviceConnectionString);
             var registryManager = RegistryManager.CreateFromConnectionString(serviceConnectionString);
@@ -92,7 +94,7 @@ namespace CarlIoT.BandManager
                 {
                     desired = new
                     {
-                        firmwareVersion = "2.0"
+                        firmwareVersion = LatestDeviceFirmwareVersion
                     }
                 }
             };
@@ -112,7 +114,7 @@ namespace CarlIoT.BandManager
 
                 Console.WriteLine($"Firmware update status: {deviceTwin.Properties.Reported}");
 
-                if (deviceTwin.Properties.Reported["firmwareVersion"] == "2.0")
+                if (deviceTwin.Properties.Reported["firmwareVersion"] == LatestDeviceFirmwareVersion)
                 {
                     Console.WriteLine("Firmware update complete!");
                     break;
